@@ -3,17 +3,144 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>測試背景</title>
+  <title>老哲｜AI 實測程式 × 私訊帶牌</title>
+  <meta name="description" content="AI 程式實測 × 私訊帶牌：嚴格止盈止損、資金分層控管、實盤驗證。想自己打或先跟單，這裡都有完整 SOP。">
+
   <style>
-    body {
-      margin: 0;
-      background: #0b0f14;
-      color: #e9edf3;
-      font-family: "PingFang TC", "Noto Sans TC", sans-serif;
+    :root{
+      --bg:#0b0f14;
+      --panel:#0f141b;
+      --ink:#e9edf3;
+      --muted:#a9b3c3;
+      --gold:#e5b567;
+      --gold-2:#f3c877;
+      --cyan:#39e3ff;
+      --radius:16px;
+      --ring:0 0 0 1px rgba(255,255,255,0.06) inset, 0 6px 24px rgba(0,0,0,.35);
+      --glow:0 8px 30px rgba(229,181,103,.22);
+      --nav-h:64px;
+      --max:1200px;
     }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:-apple-system, BlinkMacSystemFont, "PingFang TC", "Noto Sans TC", sans-serif;}
+    img{max-width:100%;display:block;height:auto}
+    a{color:var(--cyan);text-decoration:none}
+    .container{max-width:var(--max);margin:auto;padding:0 20px}
+
+    /* 導覽列 */
+    .nav{position:sticky;top:0;z-index:50;height:var(--nav-h);
+      backdrop-filter:saturate(1.4) blur(10px);
+      background:linear-gradient(180deg, rgba(14,18,24,.86), rgba(14,18,24,.55));
+      border-bottom:1px solid rgba(255,255,255,.06);}
+    .nav .container{display:flex;align-items:center;justify-content:space-between;height:100%}
+    .brand{font-weight:700;letter-spacing:.04em}
+    .brand b{color:var(--gold)}
+    .tabs{display:flex;gap:24px}
+    .tabs a{color:var(--ink);opacity:.72}
+    .tabs a:hover,.tabs a.active{opacity:1}
+
+    /* 區塊卡片 */
+    section{scroll-margin-top:calc(var(--nav-h) + 12px)}
+    .block{background:linear-gradient(180deg,#0f141b,#0c1117);border:1px solid rgba(255,255,255,.06);
+      border-radius:var(--radius);box-shadow:var(--ring);padding:28px;margin-top:22px}
+    .title{display:flex;align-items:center;gap:10px;font-weight:800;font-size:clamp(20px,2.6vw,28px);letter-spacing:.05em}
+    .title .em{color:var(--gold)}
+    .lead{color:var(--muted);margin:.2rem 0 1.2rem}
+
+    /* 按鈕 */
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      padding:12px 18px;border-radius:999px;font-weight:800;letter-spacing:.04em;
+      border:1px solid rgba(255,255,255,.08);background:#121821;color:var(--ink);
+      box-shadow:var(--glow);transition:.2s transform ease, .2s box-shadow ease}
+    .btn.gold{background:linear-gradient(180deg,var(--gold),var(--gold-2));color:#231a06;border-color:rgba(0,0,0,.2)}
+    .btn:hover{transform:translateY(-1px);box-shadow:0 10px 28px rgba(229,181,103,.33)}
+
+    /* 圖片 */
+    .media{border-radius:calc(var(--radius) - 2px);overflow:hidden;border:1px solid rgba(255,255,255,.06);
+      background:#0a0e13;box-shadow:var(--ring)}
+    .hero-visual{aspect-ratio:16/9;max-height:420px}
+    .hero-visual img{width:100%;height:100%;object-fit:cover}
+
+    /* QR 區塊 */
+    .qr-cards{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      align-items:flex-start;
+      gap:24px;
+      margin-top:24px;
+    }
+    .qr{
+      flex:0 1 300px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      text-align:center;
+      gap:12px;
+      background:#0f141b;
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:18px;
+      box-shadow:var(--ring);
+      padding:20px;
+    }
+    .qr img{width:250px;aspect-ratio:1/1;object-fit:contain;background:#fff;border-radius:12px}
+    .qr .cap{font-weight:800;letter-spacing:.08em;color:var(--cyan)}
+
+    @media (max-width:768px){
+      .qr-cards{gap:14px;flex-wrap:wrap;justify-content:center}
+      .qr{flex:0 1 45%;padding:14px}
+      .qr img{width:100%;max-width:180px}
+    }
+
+    footer{color:#99a6bb;opacity:.8;padding:30px 0;text-align:center}
   </style>
 </head>
+
 <body>
-  <h1>如果背景是黑色 → CSS 正常</h1>
+  <!-- NAV -->
+  <header class="nav">
+    <div class="container">
+      <div class="brand">老哲｜<b>AI 實測程式</b> × 私訊帶牌</div>
+      <nav class="tabs">
+        <a href="#a" class="active">AI 程式</a>
+        <a href="#b">帶牌紀錄</a>
+        <a href="#c">私訊加入</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- C. 私訊加入 / QR -->
+    <section id="c" class="block" aria-labelledby="c-title">
+      <div class="title" id="c-title">📱 <span class="em">C｜私訊加入</span></div>
+      <p class="lead">任何方式都能找到我，回覆時段：<b>全天回覆</b>（忙線稍候）。</p>
+
+      <div class="qr-cards">
+        <!-- LINE -->
+        <div class="qr">
+          <img src="line-qr.jpg" alt="LINE 私訊 QR Code" loading="lazy">
+          <a class="btn gold"
+            href="https://line.me/ti/p/dbATQbyhl2"
+            target="_blank" rel="noopener noreferrer"
+            aria-label="LINE 私訊加入">LINE 私訊加入</a>
+          <div class="cap">LINE 私訊</div>
+        </div>
+
+        <!-- IG -->
+        <div class="qr">
+          <img src="ig-qr.jpg" alt="IG 私訊 QR Code" loading="lazy">
+          <a class="btn gold"
+            href="https://www.instagram.com/laozhe._.0820?igsh=eWh1MW15b3U1eDl5&utm_source=qr"
+            target="_blank" rel="noopener noreferrer"
+            aria-label="IG 私訊加入">IG 私訊加入</a>
+          <div class="cap">IG 私訊</div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      © 老哲｜AI 實測程式 × 私訊帶牌．僅為工具介紹，非投資建議。
+    </footer>
+  </main>
 </body>
 </html>
