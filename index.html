@@ -5,57 +5,77 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>老哲｜AI 實測程式 × 私訊帶牌</title>
   <meta name="description" content="老哲 — AI 實測程式 × 私訊帶牌｜24H 在線、專業風控、贏了才抽。LINE / IG 私訊加入。" />
+  <meta property="og:title" content="老哲｜AI 實測程式 × 私訊帶牌" />
+  <meta property="og:description" content="24H 在線、專業風控、贏了才抽。LINE / IG 私訊加入。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="ai-portrait.jpg" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800&display=swap" rel="stylesheet" />
   <style>
     :root{
-      --bg:#0b0f14; --panel:#111723; --muted:#202838;
-      --text:#e8f1ff; --brand:#00e1ff; --brand2:#72f5ff;
-      --accent:#ffd166; --ok:#7ef29a; --warn:#ff9e7a;
-      --shadow:0 12px 30px rgba(0,0,0,.35);
-      --radius:18px;
+      --bg:#0a0f17; --card:#0e1420; --card2:#0b1220;
+      --muted:#1b2436; --line:#21304a;
+      --txt:#eaf1ff; --txt2:#a7b7d7;
+      --brand:#00e1ff; --brand2:#77f3ff; --accent:#ffd166; --ok:#7ef29a;
+      --shadow:0 20px 50px rgba(0,0,0,.45); --r:18px;
     }
     *{box-sizing:border-box}
-    html,body{margin:0;background:radial-gradient(1200px 600px at 10% 10%,#132033 0%,#0b0f14 45%,#090c11 100%);
-      color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto;line-height:1.6}
-    a{color:var(--brand)}
-    .wrap{max-width:1120px;margin:auto;padding:28px 18px 80px}
-    .nav{display:flex;align-items:center;gap:14px;margin-bottom:20px}
-    .badge{font-size:12px;border:1px solid #2a3246;padding:6px 10px;border-radius:999px;color:#a9b6d1}
-    .hero{display:grid;grid-template-columns:1.2fr .8fr;gap:22px;align-items:center}
-    .card{background:linear-gradient(180deg,#0f1623,#0b111b 60%);border:1px solid #1b2233;border-radius:var(--radius);box-shadow:var(--shadow)}
-    .hero .card{padding:26px}
-    h1{margin:0 0 10px;font-size:38px;letter-spacing:.5px}
-    .grad{background:linear-gradient(135deg,var(--brand) 0%,var(--brand2) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
-    .sub{opacity:.82}
-    .chip{display:inline-flex;gap:8px;align-items:center;background:#0d1420;border:1px solid #203049;padding:8px 12px;border-radius:12px;font-size:13px;margin-right:8px}
-    .cta{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
-    .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 16px;border-radius:12px;border:1px solid #1e2a40;background:#0d1522;color:var(--text);text-decoration:none;font-weight:700}
-    .btn.primary{background:linear-gradient(90deg,#00e1ff,#00b3ff);color:#001118;border:none}
-    .btn.outline{border:1px solid #2b3a57}
-    .avatar{width:100%;border-radius:14px;border:1px solid #1b2233;box-shadow:0 10px 22px rgba(0,0,0,.35)}
+    html,body{margin:0;background:
+      radial-gradient(1200px 600px at 10% 10%,#13243a 0%,#0b1422 45%,#091019 100%);
+      color:var(--txt);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto;line-height:1.65}
+    a{color:var(--brand);text-decoration:none}
+    .wrap{max-width:1140px;margin:auto;padding:28px 18px 96px}
+
+    /* nav */
+    .nav{display:flex;gap:10px;align-items:center;margin:6px 0 18px}
+    .badge{font-size:12px;border:1px solid var(--line);padding:6px 10px;border-radius:999px;color:var(--txt2);background:#0c1422}
+
+    /* hero */
+    .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:22px;align-items:center}
+    .card{background:linear-gradient(180deg,var(--card),var(--card2) 60%);
+      border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+    .hero .card{padding:28px}
+    h1{margin:0 0 10px;font-size:40px;letter-spacing:.4px}
+    .grad{background:linear-gradient(135deg,var(--brand),var(--brand2));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .sub{opacity:.9;color:var(--txt2)}
+    .chips{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0 4px}
+    .chip{display:inline-flex;gap:8px;align-items:center;background:#0c1728;border:1px solid var(--line);
+      padding:8px 12px;border-radius:12px;font-size:13px;color:#c3d1ea}
+    .cta{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 16px;border-radius:12px;border:1px solid #2a3a57;background:#0b1626;color:var(--txt);font-weight:800}
+    .btn.primary{background:linear-gradient(90deg,var(--brand),#00b1ff);color:#001018;border:none}
+    .btn.ghost{border:1px solid #334767}
+
+    .avatar{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:16px;border:1px solid var(--line);box-shadow:0 14px 28px rgba(0,0,0,.45)}
+
     /* sections */
-    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px;margin-top:28px}
-    .col12{grid-column:span 12}
-    .col6{grid-column:span 6}
-    .col4{grid-column:span 4}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px;margin-top:26px}
+    .col12{grid-column:span 12}.col6{grid-column:span 6}.col4{grid-column:span 4}
     .panel{padding:22px}
     h2{margin:0 0 10px;font-size:26px}
-    .mut{color:#a9b6d1}
+    .mut{color:var(--txt2)}
     ul.clean{margin:12px 0 0;padding-left:18px}
     ul.clean li{margin:6px 0}
-    .pill{display:inline-flex;align-items:center;gap:8px;background:#101827;border:1px solid #24324a;border-radius:999px;padding:6px 10px;font-size:12px;color:#b8c6df}
-    .stat{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
-    .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
-    .gallery img{width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid #1b2233}
+    .pill{display:inline-flex;align-items:center;gap:8px;background:#0d1a2e;border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-size:12px;color:#c0d0ea}
+    .stat{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+
+    .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
+    .gallery figure{margin:0}
+    .gallery img{width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid var(--line)}
+    .gallery figcaption{margin-top:6px;font-size:12px;color:var(--txt2)}
+
     .qr{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-    .qr .cell{background:#0f1623;border:1px solid #1b2233;border-radius:14px;padding:14px;text-align:center}
+    .qr .cell{background:#0f1626;border:1px solid var(--line);border-radius:16px;padding:14px;text-align:center}
     .qr img{width:100%;border-radius:10px}
-    .footer{margin-top:28px;padding:18px;border-top:1px solid #1d2637;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+
+    .footer{margin-top:30px;padding:18px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
     .note{font-size:12px;color:#9eb0cc}
+
     .sticky-cta{position:fixed;left:0;right:0;bottom:14px;display:flex;justify-content:center;pointer-events:none}
     .sticky-cta a{pointer-events:auto}
+
     @media (max-width:900px){
       .hero{grid-template-columns:1fr}
+      .avatar{aspect-ratio:3/4}
       .gallery img{height:180px}
       .qr{grid-template-columns:1fr}
     }
@@ -76,14 +96,14 @@
       <div class="card">
         <h1><span class="grad">AI 實測 × 私訊帶牌</span></h1>
         <p class="sub">嚴格止盈止損、資金分層控管、實盤驗證。想自己打或先跟單，這裡都有完整 SOP。</p>
-        <div class="stat">
-          <span class="pill">🧠 即時路單判讀</span>
-          <span class="pill">📈 回測＋實盤紀錄</span>
-          <span class="pill">🛟 風險可控</span>
+        <div class="chips">
+          <span class="chip">🧠 即時路單判讀</span>
+          <span class="chip">📈 回測＋實盤紀錄</span>
+          <span class="chip">🛟 風險可控</span>
         </div>
         <div class="cta">
           <a class="btn primary" href="https://line.me/ti/p/dbATQbyhl2" target="_blank">LINE 私訊加入</a>
-          <a class="btn outline" href="https://www.instagram.com/laozhe._.0820?igsh=eWh1MW15b3U1eDl5&utm_source=qr" target="_blank">IG 私訊加入</a>
+          <a class="btn ghost" href="https://www.instagram.com/laozhe._.0820?igsh=eWh1MW15b3U1eDl5&utm_source=qr" target="_blank">IG 私訊加入</a>
         </div>
       </div>
       <img class="avatar" src="ai-portrait.jpg" alt="老哲 AI 肖像" />
@@ -93,16 +113,16 @@
     <section class="grid">
       <div class="col12 card panel">
         <h2>🧠 A｜AI 實測程式</h2>
-        <p class="mut">核心邏輯：<b>路單特徵抽取</b> + <b>即時權重調整</b>。目標是追求<strong>穩定、可控、可回測</strong>的策略表現。</p>
+        <p class="mut">核心邏輯：<b>路單特徵抽取</b>＋<b>即時權重調整</b>，目標追求<strong>穩定、可控、可回測</strong>的策略表現。</p>
         <ul class="clean">
-          <li>即時判讀：介面顯示「<b>AI 機率與建議注碼</b>」，帶入紀律即可執行。</li>
+          <li>即時判讀：介面顯示「<b>AI 機率與建議注碼</b>」，照紀律執行即可。</li>
           <li>嚴格風控：預設 <b>止盈 / 止損 / 連錯停手</b> 三層保護。</li>
           <li>回測 + 實盤：程式與手動紀錄雙軌並存，可追蹤每日盈虧。</li>
         </ul>
         <div class="gallery">
-          <img src="ai-raw.jpg" alt="原始畫面（未下注）">
-          <img src="ai-input.jpg" alt="輸入紀錄中（判讀機率）">
-          <img src="ai-result.jpg" alt="結果與損益回寫">
+          <figure><img src="ai-raw.jpg" alt="原始畫面"><figcaption>原始畫面</figcaption></figure>
+          <figure><img src="ai-input.jpg" alt="輸入判讀"><figcaption>輸入判讀</figcaption></figure>
+          <figure><img src="ai-result.jpg" alt="結算結果"><figcaption>結算結果</figcaption></figure>
         </div>
       </div>
     </section>
@@ -111,25 +131,25 @@
     <section class="grid">
       <div class="col12 card panel">
         <h2>🎯 B｜私訊帶牌（<span class="grad">24H 都在線</span>）</h2>
-        <p class="mut">目前以「<b>私訊一對一</b>」為主。提供進出場節奏、<b>資金分層</b>與<b>風險停損</b>，並同步簡易教學，幫你建立紀律。</p>
+        <p class="mut">目前以「<b>私訊一對一</b>」為主。提供進出場節奏、<b>資金分層</b>與<b>風險停損</b>，同步簡易教學，幫你建立紀律。</p>
         <ul class="clean">
           <li>操作節奏：先小額、連錯即停、達標即收，<b>不追漲不戀戰</b>。</li>
           <li>透明回報：當日清單＆截圖留存（隱私資訊遮蔽）。</li>
           <li>後續規劃：群組帶牌將依序開放，維持品質優先。</li>
         </ul>
         <div class="gallery">
-          <img src="group-1.jpg" alt="帶牌紀錄 1">
-          <img src="group-2.jpg" alt="帶牌紀錄 2">
-          <img src="group-3.jpg" alt="帶牌紀錄 3">
+          <figure><img src="group-1.jpg" alt="帶牌紀錄 1"><figcaption>帶牌紀錄（1）</figcaption></figure>
+          <figure><img src="group-2.jpg" alt="帶牌紀錄 2"><figcaption>帶牌紀錄（2）</figcaption></figure>
+          <figure><img src="group-3.jpg" alt="帶牌紀錄 3"><figcaption>帶牌紀錄（3）</figcaption></figure>
         </div>
       </div>
     </section>
 
-    <!-- C. 抽成（贏了才抽） -->
+    <!-- C. 抽成（贏了才抽） + 聯絡 -->
     <section class="grid">
       <div class="col6 card panel">
         <h2>💰 C｜獲利分潤（贏了才抽）</h2>
-        <p class="mut">預設抽成 <b>20%</b>（可談）。<br/>結帳機制彈性：<b>日結或週結</b>皆可，對帳透明、簡單好記。</p>
+        <p class="mut">預設抽成 <b>20%</b>（可談）。結帳機制彈性：<b>日結或週結</b>皆可，對帳透明、簡單好記。</p>
         <ul class="clean">
           <li>範例：獲利 <b>$10,000</b> → 抽成 20% = <b>$2,000</b></li>
           <li>若當日無獲利 → <b>不收費</b></li>
@@ -141,7 +161,6 @@
         </div>
       </div>
 
-      <!-- 聯絡＆QR -->
       <div class="col6 card panel">
         <h2>📲 私訊加入</h2>
         <p class="mut">任一方式都可找到我，回覆時段：<b>全天回覆</b>（忙線稍候）。</p>
@@ -162,8 +181,8 @@
     <div class="footer">
       <div class="note">© 老哲｜AI 實測程式 × 私訊帶牌 · 本頁僅為工具／活動介紹，非投資建議或保證獲利。請量力而為，嚴格止盈止損。</div>
       <div class="cta">
-        <a class="btn outline" href="https://line.me/ti/p/dbATQbyhl2" target="_blank">LINE 聯絡</a>
-        <a class="btn outline" href="https://www.instagram.com/laozhe._.0820?igsh=eWh1MW15b3U1eDl5&utm_source=qr" target="_blank">IG 聯絡</a>
+        <a class="btn ghost" href="https://line.me/ti/p/dbATQbyhl2" target="_blank">LINE 聯絡</a>
+        <a class="btn ghost" href="https://www.instagram.com/laozhe._.0820?igsh=eWh1MW15b3U1eDl5&utm_source=qr" target="_blank">IG 聯絡</a>
       </div>
     </div>
   </div>
