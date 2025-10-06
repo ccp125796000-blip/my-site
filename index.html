@@ -1,223 +1,188 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>老哲｜AI 實測程式 × 私訊帶牌</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>老哲｜AI 實測程式 × 私訊帶牌</title>
+<meta name="color-scheme" content="dark light" />
+<style>
+  :root{
+    --bg:#0c1116; --card:#0f151b; --muted:#9ab; --text:#e9eef2;
+    --gold:#f2c14e; --gold-2:#f7d57f; --accent:#62d0ff;
+    --ring: rgba(242,193,78,.35); --bd:#22303c;
+    --shadow: 0 20px 60px rgba(0,0,0,.45), 0 4px 14px rgba(0,0,0,.35);
+    --radius:14px; --radius-sm:10px; --max:1080px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; background:radial-gradient(1000px 600px at 70% -10%,#14202b 0%, transparent 60%) , var(--bg);
+    color:var(--text); font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+  }
+  a{color:var(--accent); text-decoration:none}
+  a:hover{opacity:.9}
+  .wrap{max-width:var(--max); margin:auto; padding:24px 18px 96px}
+  header{
+    position:sticky; top:0; z-index:20;
+    backdrop-filter:saturate(150%) blur(10px);
+    background:linear-gradient(180deg, rgba(12,17,22,.9), rgba(12,17,22,.65));
+    border-bottom:1px solid var(--bd);
+  }
+  .nav{max-width:var(--max); margin:auto; padding:14px 18px; display:flex; gap:16px; align-items:center; justify-content:space-between}
+  .brand{font-weight:700; letter-spacing:.04em}
+  .brand b{color:var(--gold)}
+  .tabs{display:flex; gap:18px; flex-wrap:wrap}
+  .tabs a{color:var(--muted)}
+  .tabs a:hover,.tabs a.active{color:var(--text)}
+  h2{font-size:28px; letter-spacing:.04em; margin:0 0 8px}
+  .em{color:var(--gold)}
+  .lead{color:var(--muted); margin:0 0 20px}
 
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  section{scroll-margin-top:84px; margin:34px 0}
+  .card{
+    background:linear-gradient(180deg,rgba(18,24,31,.92),rgba(15,21,27,.92));
+    border:1px solid var(--bd); border-radius:var(--radius);
+    box-shadow:var(--shadow); padding:28px; overflow:hidden;
+  }
 
-  <style>
-    :root{
-      --bg:#0d0d0d;
-      --panel:rgba(255,255,255,.03);
-      --text:#eaeaea;
-      --muted:#9aa0a6;
-      --gold:#f5d46b;
-      --gold2:#e6b400;
-      --ring:rgba(245,212,107,.25);
-      --stroke:rgba(255,255,255,.1);
-    }
+  .chips{display:flex; flex-wrap:wrap; gap:12px; margin:18px 0 6px}
+  .chip{
+    display:inline-flex; align-items:center; gap:10px; padding:10px 14px;
+    border-radius:999px; background:#121a22; border:1px solid #22303c; color:#dbe6ee;
+  }
 
-    /* 基本樣式 */
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      background:var(--bg);
-      color:var(--text);
-      font-family:'Noto Sans TC',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      line-height:1.8;
-      text-align:center;
-      overflow-x:hidden;
-    }
+  .grid-2{display:grid; gap:22px}
+  .grid-3{display:grid; gap:22px}
+  @media(min-width:760px){ .grid-2{grid-template-columns:1fr 1fr} }
+  @media(min-width:980px){ .grid-3{grid-template-columns:repeat(3,1fr)} }
 
-    /* 開場動畫：全屏遮罩 */
-    .splash{
-      position:fixed; inset:0;
-      background: radial-gradient(1200px 1200px at 50% -10%, rgba(245,212,107,.08), transparent 60%), #000;
-      display:flex; align-items:center; justify-content:center;
-      z-index:9999;
-      animation: fadeOut .9s ease .9s forwards;
-    }
-    .splash-card{
-      padding:26px 34px;
-      border-radius:16px;
-      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      border:1px solid var(--stroke);
-      box-shadow:0 0 40px var(--ring), inset 0 0 30px rgba(255,255,255,.04);
-      transform:translateY(8px);
-      animation: rise .7s cubic-bezier(.2,.8,.2,1);
-    }
-    .splash-title{
-      margin:0 0 6px;
-      letter-spacing:.08em;
-      font-weight:700;
-      font-size:22px;
-      background:linear-gradient(90deg, var(--gold), #fff);
-      -webkit-background-clip:text;
-      background-clip:text;
-      color:transparent;
-      text-shadow:0 0 18px rgba(245,212,107,.35);
-    }
-    .splash-sub{margin:0;color:var(--muted);font-size:13px}
+  .hero{
+    border-radius:var(--radius); overflow:hidden; border:1px solid var(--bd);
+    background:#0b1116; position:relative; min-height:280px;
+  }
+  .hero img{width:100%; height:100%; object-fit:cover; display:block}
 
-    @keyframes rise{from{opacity:.2;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
-    @keyframes fadeOut{to{opacity:0;visibility:hidden}}
-
-    /* Header */
-    header{
-      padding:20px 16px;
-      background:#000;
-      position:sticky; top:0; z-index:10;
-      box-shadow:0 2px 10px rgba(255,215,0,.08);
-      backdrop-filter:saturate(1.2) blur(2px);
-    }
-    h1{
-      font-size:1.35em; margin:0 0 10px; color:var(--gold);
-      letter-spacing:.06em;
-    }
-    nav a{
-      display:inline-block; margin:0 16px; color:var(--text); text-decoration:none; font-weight:700;
-      position:relative; transition:.25s;
-    }
-    nav a::after{
-      content:""; position:absolute; left:0; right:0; bottom:-6px; height:2px;
-      background:linear-gradient(90deg, transparent, var(--gold), transparent);
-      transform:scaleX(0); transform-origin:center; transition:.25s;
-    }
-    nav a:hover{color:var(--gold)}
-    nav a:hover::after{transform:scaleX(1)}
-
-    /* 內容卡片 */
-    main{opacity:0; animation: pageIn .6s ease .9s forwards}
-    @keyframes pageIn{to{opacity:1}}
-    section{
-      max-width:980px; margin:56px auto; padding:34px 20px;
-      background:var(--panel); border:1px solid var(--stroke); border-radius:14px;
-      box-shadow:0 0 28px rgba(255,215,0,.05);
-    }
-    h2{margin:6px 0 8px}
-    .lead{color:var(--muted); margin:0 0 6px}
-    .feature{
-      display:flex; flex-wrap:wrap; justify-content:center; gap:12px; margin-top:14px;
-    }
-    .chip{
-      background:#111; border:1px solid var(--stroke);
-      border-radius:28px; padding:10px 18px; font-size:15px;
-    }
-
-    /* CTA 按鈕 */
-    .btn{
-      display:inline-block; margin-top:20px; padding:11px 26px; border-radius:30px;
-      text-decoration:none; font-weight:800; letter-spacing:.05em; transition:.28s;
-    }
-    .btn.gold{
-      color:#000; background:linear-gradient(90deg, var(--gold), var(--gold2));
-      box-shadow:0 0 14px rgba(245,212,107,.45);
-    }
-    .btn.gold:hover{transform:translateY(-1px) scale(1.03)}
-
-    /* QR 卡片 */
-    .qr-wrap{
-      display:flex; justify-content:center; gap:38px; flex-wrap:wrap; margin-top:20px;
-    }
-    .qr-card{
-      width:280px; max-width:90vw; padding:18px 16px 22px;
-      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-      border:1px solid var(--stroke); border-radius:16px;
-      box-shadow:0 10px 40px rgba(0,0,0,.35), 0 0 24px rgba(255,215,0,.06);
-    }
-    .qr-card img{
-      width:100%; height:auto; display:block; border-radius:12px;
-      box-shadow:0 0 22px rgba(255,255,255,.08);
-    }
-
-    footer{margin:70px 0 32px; color:var(--muted); font-size:.9em}
-
-    /* 手機優化 */
-    @media (max-width:600px){
-      section{margin:30px 12px; padding:22px 14px}
-      .chip{font-size:14px}
-      nav a{margin:0 12px}
-    }
-
-    /* 使用者偏好：減少動畫 */
-    @media (prefers-reduced-motion:reduce){
-      .splash,.splash-card,main{animation:none}
-    }
-  </style>
+  .qr{
+    background:#0e141a; border:1px solid var(--bd);
+    border-radius:var(--radius); padding:20px; display:flex; flex-direction:column; align-items:center; gap:14px;
+  }
+  .qr img{width:min(240px,70vw); height:auto; border-radius:12px; display:block}
+  .btn{
+    display:inline-block; padding:12px 18px; border-radius:999px; font-weight:700; letter-spacing:.04em;
+    background:#15202b; border:1px solid #2a3a48; color:var(--text);
+  }
+  .btn.gold{background:linear-gradient(180deg,var(--gold),var(--gold-2)); color:#1a1305; border:none; box-shadow:0 8px 25px var(--ring)}
+  .btn.block{width:100%; text-align:center}
+  .muted{color:var(--muted)}
+  .cap{color:#bcd; font-size:14px}
+  footer{border-top:1px solid var(--bd); margin-top:40px}
+  .foot{max-width:var(--max); margin:auto; padding:24px 18px; display:flex; align-items:center; justify-content:space-between; gap:12px; color:var(--muted)}
+  ul{margin:0; padding-left:1.25em}
+  li{margin:.25em 0}
+  .center{text-align:center}
+</style>
 </head>
-
 <body>
-  <!-- 開場動畫 -->
-  <div class="splash" aria-hidden="true">
-    <div class="splash-card">
-      <h3 class="splash-title">老哲・AI 實測程式</h3>
-      <p class="splash-sub">Loading strategy…</p>
-    </div>
-  </div>
 
-  <header>
-    <h1>老哲｜AI 實測程式 × 私訊帶牌</h1>
-    <nav>
-      <a href="#a">AI 程式</a>
+<header>
+  <div class="nav">
+    <div class="brand">老哲｜<b>AI 實測程式</b> × 私訊帶牌</div>
+    <nav class="tabs">
+      <a href="#ai" class="active">AI 程式</a>
       <a href="#b">帶牌紀錄</a>
       <a href="#c">私訊加入</a>
     </nav>
-  </header>
+  </div>
+</header>
 
-  <main>
-    <section id="a" aria-labelledby="a-title">
-      <h2 id="a-title">🧠 AI 實測程式</h2>
-      <p class="lead">核心邏輯：路單特徵抽取 + 即時權重調整。目標：穩定・可控・可回測。</p>
-      <div class="feature">
-        <div class="chip">📊 顯示 AI 機率與建議注碼</div>
-        <div class="chip">💾 回測 + 實盤雙軌紀錄</div>
-        <div class="chip">🛡️ 三層風控：止盈 / 止損 / 連錯停手</div>
+<main class="wrap">
+
+  <!-- A. AI 程式 -->
+  <section id="ai">
+    <div class="card">
+      <h2>🧠 A｜<span class="em">AI 實測程式</span></h2>
+      <p class="lead">核心邏輯：路單特徵抽取 + 即時權重調整。目標：<b>穩定・可控・可回溯</b>。</p>
+
+      <div class="chips">
+        <span class="chip">📊 顯示 AI 機率與建議註碼</span>
+        <span class="chip">🧾 回測＋實盤雙軌紀錄</span>
+        <span class="chip">🛡️ 三層風控：止盈 / 止損 / 連錯停手</span>
       </div>
-      <a class="btn gold" href="#c">立即私訊老哲</a>
-    </section>
 
-    <section id="b" aria-labelledby="b-title">
-      <h2 id="b-title">🎯 私訊帶牌（24H 在線）</h2>
-      <p class="lead">提供即時節奏與回覆策略，風險控管明確；同步簡易教學，協助建立紀律與策略。</p>
-      <div class="feature">
-        <div class="chip">🧭 即時路單判讀</div>
-        <div class="chip">📈 實盤策略同步</div>
-        <div class="chip">🕐 24H 專線支援</div>
+      <div class="grid-2" style="margin-top:10px">
+        <div class="hero">
+          <!-- 首圖：ai-portrait.jpg（放和 index.html 同一層） -->
+          <img src="ai-portrait.jpg" alt="AI Portrait" loading="lazy"
+               onerror="this.parentNode.style.display='none'">
+        </div>
+        <div>
+          <p class="muted">想自己打或先跟單，這裡都有完整 SOP。任何問題直接私訊我。</p>
+          <p><a class="btn gold" href="https://line.me/ti/p/dbATQbyhl2" target="_blank" rel="noopener">立即私訊老哲（LINE）</a></p>
+        </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section id="c" aria-labelledby="c-title">
-      <h2 id="c-title">📱 私訊加入</h2>
+  <!-- B. 帶牌紀錄 -->
+  <section id="b">
+    <div class="card">
+      <h2>🎯 B｜<span class="em">私訊帶牌（24H 在線）</span></h2>
+      <p class="lead">提供進出場節奏、資金分層與風險停損；同步簡易教學，幫你建立紀律。</p>
+
+      <ul class="muted">
+        <li>🧠 即時路單判讀</li>
+        <li>📈 實盤策略同步</li>
+        <li>🕒 24H 專線支援</li>
+      </ul>
+
+      <!-- 三張群組/對話紀錄照：group-1.jpg / group-2.jpg / group-3.jpg -->
+      <div class="grid-3" style="margin-top:16px">
+        <div class="hero"><img src="group-1.jpg" alt="紀錄 1" loading="lazy" onerror="this.parentNode.style.display='none'"></div>
+        <div class="hero"><img src="group-2.jpg" alt="紀錄 2" loading="lazy" onerror="this.parentNode.style.display='none'"></div>
+        <div class="hero"><img src="group-3.jpg" alt="紀錄 3" loading="lazy" onerror="this.parentNode.style.display='none'"></div>
+      </div>
+
+      <p class="center" style="margin-top:18px">
+        <a class="btn gold" href="https://line.me/ti/p/dbATQbyhl2" target="_blank" rel="noopener">立刻私訊老哲</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- C. 私訊加入 / QR -->
+  <section id="c">
+    <div class="card">
+      <h2>📱 C｜<span class="em">私訊加入</span></h2>
       <p class="lead">任何方式都能找到我，回覆時段：<b>全天回覆</b>（忙線稍候）。</p>
 
-      <div class="qr-wrap">
-        <article class="qr-card">
-          <img src="line-qr.jpg" alt="LINE 私訊 QR Code">
-          <a class="btn gold" href="https://line.me/ti/p/dbATQbyhl2" target="_blank" rel="noopener">LINE 私訊加入</a>
-        </article>
+      <div class="grid-2">
+        <div class="qr" role="listitem">
+          <!-- line-qr.jpg -->
+          <img src="line-qr.jpg" alt="LINE 私訊 QR Code" loading="lazy">
+          <a class="btn gold block" href="https://line.me/ti/p/dbATQbyhl2" target="_blank" rel="noopener"
+             aria-label="LINE 私訊加入">LINE 私訊加入</a>
+          <div class="cap">LINE 私訊</div>
+        </div>
 
-        <article class="qr-card">
-          <img src="ig-qr.jpg" alt="Instagram 私訊 QR Code">
-          <a class="btn gold" href="https://www.instagram.com/laozhe._.0820?igsh=eWh1MW15b3U1eDl5&utm_source=qr" target="_blank" rel="noopener">IG 私訊加入</a>
-        </article>
+        <div class="qr" role="listitem">
+          <!-- ig-qr.jpg -->
+          <img src="ig-qr.jpg" alt="IG 私訊 QR Code" loading="lazy">
+          <a class="btn block" href="https://www.instagram.com/laozhe._.0820?igsh=eWh1MW15b3U1eDl5&utm_source=qr"
+             target="_blank" rel="noopener" aria-label="IG 私訊加入">IG 私訊加入</a>
+          <div class="cap">IG 私訊</div>
+        </div>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
 
-  <footer>
-    老哲 © 2025｜僅為工具介紹，非投資建議；請量力而為，嚴守紀律。
-  </footer>
+</main>
 
-  <script>
-    // 保底：若圖片很慢，Splash 最多 1.6s 就自動結束
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        const s = document.querySelector('.splash');
-        s && (s.style.display = 'none');
-      }, 1600);
-    });
-  </script>
+<footer>
+  <div class="foot">
+    <div>© 老哲｜AI 實測程式 × 私訊帶牌・僅為工具介紹，非投資建議。請量力而為，嚴守紀律。</div>
+    <div><a href="https://line.me/ti/p/dbATQbyhl2" class="btn gold">聯絡老哲</a></div>
+  </div>
+</footer>
+
 </body>
 </html>
