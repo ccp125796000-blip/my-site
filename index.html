@@ -13,7 +13,8 @@
       --radius:16px;--ring:0 0 0 1px rgba(255,255,255,.06) inset, 0 6px 24px rgba(0,0,0,.35);
       --glow:0 8px 30px rgba(229,181,103,.22);--nav-h:64px;--max:1200px;
     }
-    *{box-sizing:border-box}html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
       font:400 16px/1.7 system-ui,-apple-system,"Segoe UI",Roboto,"PingFang TC","Noto Sans TC","Heiti TC",sans-serif}
     img{max-width:100%;display:block;height:auto}
     a{color:var(--cyan);text-decoration:none}
@@ -49,36 +50,37 @@
     .btn.gold{background:linear-gradient(180deg,var(--gold),var(--gold-2));color:#231a06;border-color:rgba(0,0,0,.2)}
     .btn:hover{transform:translateY(-1px);box-shadow:0 10px 28px rgba(229,181,103,.33)}
 
-    /* 圖片展示固定比例 */
+    /* 圖片展示 */
     .media{border-radius:calc(var(--radius) - 2px);overflow:hidden;border:1px solid rgba(255,255,255,.06);
       background:#0a0e13;box-shadow:var(--ring)}
-    .hero-visual{aspect-ratio:16/9;max-height:420px}
-    .hero-visual img{width:100%;height:100%;object-fit:cover}
+    /* ✅ 肖像圖完整顯示（不裁切，等比縮放，左右上下留黑） */
+    .hero-visual{aspect-ratio:16/9;max-height:420px;background:#0a0e13}
+    .hero-visual img{width:100%;height:100%;object-fit:contain;object-position:center}
 
-    /* 三圖網格 */
-    .grid{display:grid;gap:18px}
-    .grid.g3{grid-template-columns:1fr}
-    .grid .phone{aspect-ratio:9/19.5;border-radius:22px;padding:8px;background:linear-gradient(180deg,#0c1117,#0a0e13);
-      border:1px solid rgba(255,255,255,.06);box-shadow:var(--ring)}
-    .grid .phone img{width:100%;height:100%;object-fit:cover;border-radius:14px}
+    /* ✅ 橫向滑動軌道（AI三圖、帶牌三圖共用） */
+    .rail{display:flex;gap:18px;overflow-x:auto;padding:8px;scroll-snap-type:x mandatory;
+      -webkit-overflow-scrolling:touch}
+    .rail::-webkit-scrollbar{display:none}
+    .card{flex:0 0 auto;scroll-snap-align:center;border:1px solid rgba(255,255,255,.06);
+      border-radius:22px;background:linear-gradient(180deg,#0c1117,#0a0e13);box-shadow:var(--ring);padding:8px}
+    /* 卡片固定比例（手機模擬框） */
+    .card .phone{aspect-ratio:9/19.5;border-radius:18px;overflow:hidden}
+    .card .phone img{width:100%;height:100%;object-fit:cover}
 
-    /* ✅ QR 區塊：手機也左右橫排 */
+    /* ✅ QR 區塊（手機也左右橫排） */
     .qr-cards{display:grid;gap:18px;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}
     .qr{display:flex;flex-direction:column;align-items:center;gap:12px;padding:18px;border-radius:18px;
       background:#0f141b;border:1px solid rgba(255,255,255,.06);box-shadow:var(--ring)}
-    /* 圖片自動縮放：最小 160px，最大 280px，隨視窗調整 */
     .qr img{width:clamp(160px,38vw,280px);aspect-ratio:1/1;object-fit:contain;background:#fff;border-radius:12px}
     .qr .cap{font-weight:800;letter-spacing:.08em;color:var(--cyan)}
     .qr .btn{min-width:220px}
 
-    /* 響應式：平板/桌機多欄 */
+    /* 響應式 */
     @media (min-width:700px){
-      .grid.g3{grid-template-columns:repeat(2,1fr)}
+      .qr img{width:min(260px,80%)}
     }
     @media (min-width:1024px){
-      .grid.g3{grid-template-columns:repeat(3,1fr)}
       .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:22px;align-items:center}
-      .qr img{width:min(280px,80%);}
     }
 
     /* Footer */
@@ -112,16 +114,20 @@
       </div>
 
       <div class="hero" style="margin-top:18px">
+        <!-- ✅ 肖像圖完整顯示 -->
         <div class="media hero-visual">
           <img src="ai-portrait.jpg" alt="AI 程式視覺示意" loading="eager" />
         </div>
-        <div class="media" style="padding:16px">
-          <div class="grid g3">
-            <div class="phone"><img src="ai-input.jpg" alt="輸入紀錄畫面" loading="lazy"></div>
-            <div class="phone"><img src="ai-raw.jpg" alt="AI 判讀中" loading="lazy"></div>
-            <div class="phone"><img src="ai-result.jpg" alt="建議與結果" loading="lazy"></div>
+
+        <!-- ✅ AI 三圖：一排可左右滑動 -->
+        <div class="media" style="padding:12px">
+          <div class="rail">
+            <div class="card" style="width:290px"><div class="phone"><img src="ai-input.jpg" alt="輸入紀錄畫面" loading="lazy"></div></div>
+            <div class="card" style="width:290px"><div class="phone"><img src="ai-raw.jpg" alt="AI 判讀中" loading="lazy"></div></div>
+            <div class="card" style="width:290px"><div class="phone"><img src="ai-result.jpg" alt="建議與結果" loading="lazy"></div></div>
           </div>
-          <div class="cta-row" style="margin-top:16px">
+
+          <div class="cta-row" style="margin-top:12px">
             <a class="btn gold" href="#c" aria-label="立即私訊老哲">立即私訊老哲</a>
           </div>
         </div>
@@ -138,13 +144,14 @@
         <span class="pill">當日清單 & 截圖留存（隱私遮蔽）</span>
       </div>
 
-      <div class="grid g3">
-        <div class="phone"><img src="group-1.jpg" alt="帶牌紀錄 1" loading="lazy"></div>
-        <div class="phone"><img src="group-2.jpg" alt="帶牌紀錄 2" loading="lazy"></div>
-        <div class="phone"><img src="group-3.jpg" alt="帶牌紀錄 3" loading="lazy"></div>
+      <!-- ✅ 帶牌三圖：一排可左右滑動 -->
+      <div class="rail" aria-label="帶牌截圖">
+        <div class="card" style="width:320px"><div class="phone"><img src="group-1.jpg" alt="帶牌紀錄 1" loading="lazy"></div></div>
+        <div class="card" style="width:320px"><div class="phone"><img src="group-2.jpg" alt="帶牌紀錄 2" loading="lazy"></div></div>
+        <div class="card" style="width:320px"><div class="phone"><img src="group-3.jpg" alt="帶牌紀錄 3" loading="lazy"></div></div>
       </div>
 
-      <div class="cta-row" style="margin-top:18px">
+      <div class="cta-row" style="margin-top:12px">
         <a class="btn gold" href="#c">立即私訊老哲</a>
       </div>
     </section>
