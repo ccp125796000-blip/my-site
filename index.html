@@ -1,255 +1,245 @@
 <!doctype html>
 <html lang="zh-Hant">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>老哲｜AI 實測程式 × 私訊帶牌</title>
-<meta name="description" content="老哲 — AI 實測程式 × 私訊帶牌｜黑金高級風、24H 在線回覆、嚴格風控、贏了才抽。LINE / IG 私訊加入。" />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800&display=swap" rel="stylesheet" />
-<style>
-/* ====== 基礎顏色（黑金） ====== */
-:root{
-  --bg:#0b0f14;
-  --panel:#0f141b;
-  --panel-2:#0c1118;
-  --line:#1a2233;
-  --text:#eaf2ff;
-  --muted:#aab7d0;
-  --gold:#d4af37;
-  --gold2:#f6d372;
-  --brand:#67e8f9;
-  --ok:#7ef29a;
-  --warn:#ff9e7a;
-  --shadow:0 14px 36px rgba(0,0,0,.45);
-  --radius:18px;
-}
-*{box-sizing:border-box}
-html,body{margin:0;background:
-  radial-gradient(1200px 600px at 8% 6%,#121827 0%,#0b0f14 50%,#090c11 100%);
-  color:var(--text);
-  font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto;
-  line-height:1.65;
-  -webkit-font-smoothing:antialiased;
-}
-a{color:var(--brand);text-decoration:none}
-img{display:block;max-width:100%;height:auto}
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>老哲｜AI 實測程式 × 私訊帶牌</title>
+  <meta name="description" content="老哲 — AI 實測程式 × 私訊帶牌｜24H 在線、專業風控、贏了才抽。LINE / IG 私訊加入。" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --bg:#0a0d12;
+      --panel:#0f1218;
+      --muted:#9fb2cc;
+      --text:#e9f1ff;
+      --gold:#f5d47c;
+      --gold2:#ffd77a;
+      --stroke:#222a36;
+      --shadow:0 12px 30px rgba(0,0,0,.35);
+      --radius:16px;
+      --maxw:1100px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;background:radial-gradient(1200px 700px at 10% -10%,#152032 0%,#0a0d12 60%,#080b10 100%);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto;line-height:1.65}
+    a{color:var(--gold)}
+    img{display:block;max-width:100%;height:auto}
 
-/* ====== 結構 ====== */
-.wrap{max-width:1160px;margin:auto;padding:28px 18px 80px}
-.section{margin-top:32px}
-h1,h2{margin:0 0 8px}
-h1{font-size:clamp(26px,3.4vw,38px)}
-h2{font-size:clamp(22px,2.4vw,28px)}
-.sub{color:var(--muted)}
-.badge{display:inline-flex;align-items:center;gap:8px;
-  padding:8px 12px;border-radius:999px;font-size:13px;
-  background:rgba(212,175,55,.08);border:1px solid rgba(212,175,55,.25);
-  color:var(--gold2)}
-.gold{background:linear-gradient(135deg,var(--gold) 0%,var(--gold2) 100%);
-  -webkit-background-clip:text;background-clip:text;color:transparent}
-.hr{height:1px;background:linear-gradient(90deg,transparent,rgba(212,175,55,.35),transparent);margin:26px 0}
+    /* header (smaller, elegant) */
+    .site{
+      position:sticky;top:0;z-index:9;
+      background:linear-gradient(180deg,rgba(10,13,18,.9),rgba(10,13,18,.6));
+      backdrop-filter:saturate(140%) blur(6px);
+      border-bottom:1px solid rgba(255,215,122,.1);
+    }
+    .nav{
+      max-width:var(--maxw);margin:auto;
+      display:flex;align-items:center;gap:18px;
+      padding:10px 16px;
+    }
+    .brand{
+      font-weight:800;letter-spacing:.6px;
+      background:linear-gradient(90deg,#fff,var(--gold2));
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+      font-size:18px;white-space:nowrap
+    }
+    .tabs{margin-left:auto;display:flex;gap:10px}
+    .tab{
+      display:inline-flex;align-items:center;justify-content:center;
+      padding:8px 12px;border-radius:999px;
+      color:#cfe2ff;text-decoration:none;font-weight:700;font-size:14px;
+      border:1px solid rgba(255,255,255,.08);
+      transition:all .18s ease;
+    }
+    .tab:hover{box-shadow:0 0 0 1px rgba(255,215,122,.35) inset;color:#fff}
 
-/* ====== 導覽 ====== */
-.topbar{position:sticky;top:0;z-index:50;background:rgba(8,12,18,.84);
-  backdrop-filter:blur(8px);border-bottom:1px solid rgba(212,175,55,.18)}
-.nav{max-width:1160px;margin:auto;padding:14px 18px;display:flex;align-items:center;gap:16px}
-.nav .brand{font-weight:800;font-size:18px;letter-spacing:.5px}
-.nav .brand .gold{letter-spacing:.6px}
-.nav ul{margin-left:auto;display:flex;gap:16px;list-style:none;padding:0}
-.nav a{display:inline-block;padding:8px 12px;border-radius:10px;color:#cfe6ff}
-.nav a:hover{background:rgba(212,175,55,.08);color:#fff}
+    /* layout */
+    .wrap{max-width:var(--maxw);margin:auto;padding:22px 16px 80px}
+    .card{
+      background:linear-gradient(180deg,#0f141d,#0b1118 60%);
+      border:1px solid var(--stroke);border-radius:var(--radius);box-shadow:var(--shadow)
+    }
+    .panel{padding:22px}
+    .hero{display:grid;grid-template-columns:1.05fr .95fr;gap:22px;align-items:center;margin-top:16px}
+    .h1{margin:0 0 8px;font-size:34px;letter-spacing:.4px}
+    .grad{background:linear-gradient(135deg,#fff 0%,var(--gold2) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .sub{color:#c7d4ea;opacity:.9}
+    .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+    .chip{
+      display:inline-flex;gap:8px;align-items:center;
+      padding:8px 12px;border-radius:12px;font-size:13px;color:#cfe2ff;
+      background:#0f1623;border:1px solid #223049
+    }
+    .cta{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;
+      padding:12px 16px;border-radius:12px;font-weight:800;text-decoration:none;
+      border:1px solid #2c3a50;color:#081015;background:#0d1522
+    }
+    .btn.gold{
+      color:#0e1014;border:none;
+      background:linear-gradient(90deg,#ffe6a8,#f5d47c 50%,#ffd77a);
+      box-shadow:0 6px 20px rgba(245,212,124,.2)
+    }
 
-/* ====== 卡片/按鈕 ====== */
-.card{background:
-  linear-gradient(180deg,rgba(12,18,28,.9),rgba(10,14,22,.92) 60%),
-  linear-gradient(180deg,#0f1623,#0b111b 60%);
-  border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
-.panel{padding:22px}
-.btn{display:inline-flex;align-items:center;justify-content:center;
-  padding:12px 16px;border-radius:12px;font-weight:800;letter-spacing:.4px}
-.btn.gold{color:#0c0f14;border:none;background:
-  linear-gradient(90deg,var(--gold),var(--gold2))}
-.btn.ghost{border:1px solid #27344d;background:#0d1522;color:#eaf2ff}
-.btn-row{display:flex;gap:12px;flex-wrap:wrap}
+    .avatar{
+      border-radius:14px;border:1px solid #1b2233;box-shadow:0 10px 22px rgba(0,0,0,.35)
+    }
 
-/* ====== 版面（RWD 網格） ====== */
-.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px}
-.col12{grid-column:span 12}
-.col8{grid-column:span 8}
-.col6{grid-column:span 6}
-.col4{grid-column:span 4}
-@media (max-width:960px){
-  .col8,.col6,.col4{grid-column:span 12}
-}
+    /* sections */
+    h2{margin:0 0 10px;font-size:26px}
+    .mut{color:#aac0dc}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px;margin-top:24px}
+    .col12{grid-column:span 12}
+    .col6{grid-column:span 6}
+    .col4{grid-column:span 4}
 
-/* ====== 英雄區 ====== */
-.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:22px;align-items:center}
-@media (max-width:960px){.hero{grid-template-columns:1fr}}
-.avatar{border-radius:16px;border:1px solid var(--line);box-shadow:0 12px 30px rgba(0,0,0,.5)}
-.features{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
-.chip{display:inline-flex;align-items:center;gap:8px;
-  padding:8px 12px;border-radius:12px;font-size:13px;
-  background:#0e1522;border:1px solid #22324b;color:#cfe2ff}
+    /* galleries - keep tidy and consistent */
+    .gallery3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .gallery3 .shot{aspect-ratio:9/16;overflow:hidden;border-radius:14px;border:1px solid var(--stroke);background:#0c121b}
+    .gallery3 .shot img{width:100%;height:100%;object-fit:cover}
 
-/* ====== 圖庫（手機框展示） ====== */
-.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-@media (max-width:960px){.gallery{grid-template-columns:1fr}}
-.phone{
-  background:#0a0f16;border:1px solid var(--line);border-radius:26px;
-  padding:14px 10px 18px;box-shadow:var(--shadow)
-}
-.phone:before{
-  content:"";display:block;width:34%;height:6px;margin:0 auto 10px;
-  border-radius:10px;background:#222b3c;opacity:.7
-}
-.phone .screen{aspect-ratio:9/19.5;border-radius:16px;overflow:hidden;border:1px solid #1b2332}
-.phone .screen img{width:100%;height:100%;object-fit:cover}
+    /* QR blocks */
+    .qr{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .qr .cell{background:#0f141d;border:1px solid var(--stroke);border-radius:16px;padding:14px;text-align:center}
+    .qr img{width:100%;border-radius:12px}
+    .qr .btn{margin-top:10px}
 
-/* ====== QR 與聯絡 ====== */
-.qr-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-@media (max-width:960px){.qr-grid{grid-template-columns:1fr}}
-.qr-card .img-wrap{border-radius:14px;overflow:hidden;border:1px solid var(--line)}
-.qr-card img{width:100%;height:auto}
-.kv{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
-.kv .pill{display:inline-flex;align-items:center;gap:8px;font-size:13px;
-  background:rgba(212,175,55,.08);border:1px solid rgba(212,175,55,.25);
-  color:var(--gold2);border-radius:999px;padding:6px 10px}
+    /* section spacing cards with slim borders */
+    .slim{border-radius:14px;border:1px solid rgba(255,215,122,.18)}
 
-/* ====== 區塊錨點偏移 ====== */
-.anchor{scroll-margin-top:80px}
+    /* footer */
+    .footer{
+      margin-top:26px;padding:16px;border-top:1px solid rgba(255,215,122,.12);
+      display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;color:#a9b6d1
+    }
 
-/* ====== 浮動行動條（手機） ====== */
-.sticky{position:fixed;left:0;right:0;bottom:14px;display:flex;justify-content:center;z-index:40}
-.sticky .btn{box-shadow:0 12px 26px rgba(212,175,55,.35)}
-@media (min-width:961px){.sticky{display:none}}
+    /* responsive */
+    @media (max-width:1000px){
+      .hero{grid-template-columns:1fr}
+    }
+    @media (max-width:720px){
+      .tabs{gap:6px}
+      .tab{padding:7px 10px;font-size:13px}
+      .h1{font-size:28px}
+      .qr{grid-template-columns:1fr}
+      .gallery3{grid-template-columns:1fr 1fr}
+      .col6{grid-column:span 12}
+      .wrap{padding-bottom:96px}
+    }
 
-.footer{margin-top:30px;padding:18px;border-top:1px solid rgba(212,175,55,.18);
-  color:#bcd0ef;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
-small{color:#9eb0cc}
-</style>
+    /* make all section blocks aligned visually */
+    .section{margin-top:18px}
+  </style>
 </head>
 <body>
 
-<!-- ====== 導覽列 ====== -->
-<header class="topbar">
-  <nav class="nav">
-    <div class="brand">老哲｜<span class="gold">AI 實測程式 × 私訊帶牌</span></div>
-    <ul>
-      <li><a href="#ai">AI 程式</a></li>
-      <li><a href="#record">帶牌紀錄</a></li>
-      <li><a href="#contact">私訊加入</a></li>
-    </ul>
-  </nav>
-</header>
-
-<div class="wrap">
-
-  <!-- ====== Hero ====== -->
-  <section class="hero section">
-    <div class="card panel">
-      <h1><span class="gold">AI 實測 × 私訊帶牌</span></h1>
-      <p class="sub">嚴格止盈止損、資金分層控管、實盤驗證。想自己打或先跟單，這裡都有完整 SOP。</p>
-      <div class="features">
-        <span class="chip">🧠 即時路單判讀</span>
-        <span class="chip">📈 回測＋實盤紀錄</span>
-        <span class="chip">🛟 風險可控</span>
-        <span class="chip">🕒 24H 在線回覆</span>
+  <!-- header -->
+  <header class="site">
+    <nav class="nav">
+      <div class="brand">老哲｜AI 實測程式 × 私訊帶牌</div>
+      <div class="tabs">
+        <a class="tab" href="#ai">AI 程式</a>
+        <a class="tab" href="#log">帶牌紀錄</a>
+        <a class="tab" href="#join">私訊加入</a>
       </div>
-      <div class="btn-row" style="margin-top:14px">
-        <a class="btn gold" href="https://line.me/ti/p/dbATQbyhl2" target="_blank">LINE 私訊加入</a>
-        <a class="btn ghost" href="https://www.instagram.com/laozhe._.0820?igsh=eWh1MW15b3U1eDl5&utm_source=qr" target="_blank">IG 私訊加入</a>
-      </div>
-      <div class="kv">
-        <span class="pill">贏了才抽</span>
-        <span class="pill">日/週結自選</span>
-        <span class="pill">對帳透明</span>
-      </div>
-    </div>
-    <img class="avatar" src="ai-portrait.jpg" alt="老哲 AI 肖像" loading="lazy">
-  </section>
+    </nav>
+  </header>
 
-  <div class="hr"></div>
+  <main class="wrap">
 
-  <!-- ====== A. AI 程式 ====== -->
-  <section id="ai" class="section anchor">
-    <div class="card panel">
-      <h2>🧠 A｜AI 實測程式</h2>
-      <p class="sub">核心邏輯：<b>路單特徵抽取</b> × <b>即時權重調整</b>，追求<strong>穩定、可控、可回測</strong>的策略表現。</p>
-      <ul>
-        <li>即時判讀：顯示「<b>AI 機率與建議注碼</b>」，照紀律執行即可。</li>
-        <li>嚴格風控：預設 <b>止盈 / 止損 / 連錯停手</b> 三層保護。</li>
-        <li>回測＋實盤：程式與手動紀錄雙軌，可追蹤每日盈虧。</li>
-      </ul>
-      <div class="gallery" style="margin-top:14px">
-        <div class="phone"><div class="screen"><img src="ai-raw.jpg" alt="原始畫面" loading="lazy"></div></div>
-        <div class="phone"><div class="screen"><img src="ai-input.jpg" alt="輸入過程" loading="lazy"></div></div>
-        <div class="phone"><div class="screen"><img src="ai-result.jpg" alt="結果與損益" loading="lazy"></div></div>
+    <!-- hero -->
+    <section class="hero">
+      <div class="card panel slim">
+        <h1 class="h1"><span class="grad">AI 實測 × 私訊帶牌</span></h1>
+        <p class="sub">嚴格止盈止損、資金分層控管、實盤驗證。想自己打或先跟單，這裡都有完整 SOP。</p>
+        <div class="chips">
+          <span class="chip">🧠 即時路單判讀</span>
+          <span class="chip">📈 回測＋實盤紀錄</span>
+          <span class="chip">🛟 風險可控</span>
+          <span class="chip">⏱ 24H 在線回覆</span>
+        </div>
+        <div class="cta">
+          <a class="btn gold"   href="https://line.me/ti/p/dbATQbyhl2" target="_blank">LINE 私訊加入</a>
+          <a class="btn"        href="https://www.instagram.com/laozhe._.0820?igsh=eWh1MW15b3U1eDl5&utm_source=qr" target="_blank">IG 私訊加入</a>
+        </div>
       </div>
-    </div>
-  </section>
+      <img class="avatar" src="ai-portrait.jpg" alt="老哲 AI 肖像">
+    </section>
 
-  <!-- ====== B. 帶牌紀錄 ====== -->
-  <section id="record" class="section anchor">
-    <div class="card panel">
-      <h2>🎯 B｜私訊帶牌（24H 在線）</h2>
-      <p class="sub">目前以「<b>私訊一對一</b>」為主。提供進出場節奏、<b>資金分層</b>與<b>風險停損</b>，並同步簡易教學，幫你建立紀律。</p>
-      <ul>
-        <li>操作節奏：先小額、連錯即停、達標即收，<b>不追漲不戀戰</b>。</li>
-        <li>透明回報：當日清單＆截圖留存（隱私資訊遮蔽）。</li>
-        <li>後續規劃：群組帶牌將依序開放，維持品質優先。</li>
-      </ul>
-      <div class="gallery" style="margin-top:14px">
-        <div class="phone"><div class="screen"><img src="group-1.jpg" alt="帶牌紀錄1" loading="lazy"></div></div>
-        <div class="phone"><div class="screen"><img src="group-2.jpg" alt="帶牌紀錄2" loading="lazy"></div></div>
-        <div class="phone"><div class="screen"><img src="group-3.jpg" alt="帶牌紀錄3" loading="lazy"></div></div>
+    <!-- A -->
+    <section id="ai" class="section grid">
+      <div class="col12 card panel slim">
+        <h2>🧠 A｜AI 實測程式</h2>
+        <p class="mut">核心邏輯：<b>路單特徵抽取</b> + <b>即時權重調整</b>。目標是追求<strong>穩定、可控、可回測</strong>的策略表現。</p>
+        <ul>
+          <li>即時判讀：顯示「AI 機率與建議注碼」，照紀律執行即可。</li>
+          <li>嚴格風控：預設 <b>止盈 / 止損 / 連錯停手</b> 三層保護。</li>
+          <li>回測 + 實盤：程式與手動紀錄雙軌並行，可追蹤每日盈虧。</li>
+        </ul>
+        <div class="gallery3" style="margin-top:14px">
+          <div class="shot"><img src="ai-raw.jpg" alt="原始畫面（未下注）"></div>
+          <div class="shot"><img src="ai-input.jpg" alt="輸入紀錄中（判讀機率）"></div>
+          <div class="shot"><img src="ai-result.jpg" alt="結果與損益回寫"></div>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ====== C. 抽成 & 聯絡 ====== -->
-  <section id="contact" class="section anchor">
-    <div class="grid">
-      <div class="col6 card panel">
+    <!-- B -->
+    <section id="log" class="section grid">
+      <div class="col12 card panel slim">
+        <h2>🎯 B｜私訊帶牌（<span class="grad">24H 在線</span>）</h2>
+        <p class="mut">目前以「私訊一對一」為主。提供進出場節奏、<b>資金分層</b>與<b>風險停損</b>，並同步簡易教學，幫你建立紀律。</p>
+        <ul>
+          <li>操作節奏：先小額、連錯即停、達標即收，<b>不追漲不戀戰</b>。</li>
+          <li>透明回報：當日清單＆截圖留存（隱私資訊遮蔽）。</li>
+          <li>後續規劃：群組帶牌將依序開放，維持品質優先。</li>
+        </ul>
+        <div class="gallery3" style="margin-top:14px">
+          <div class="shot"><img src="group-1.jpg" alt="帶牌紀錄 1"></div>
+          <div class="shot"><img src="group-2.jpg" alt="帶牌紀錄 2"></div>
+          <div class="shot"><img src="group-3.jpg" alt="帶牌紀錄 3"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- C + Join -->
+    <section class="section grid">
+      <div class="col6 card panel slim">
         <h2>💰 C｜獲利分潤（贏了才抽）</h2>
-        <p class="sub">預設抽成 <b>20%</b>（可談）。結帳機制彈性：<b>日結或週結</b>皆可，對帳透明、簡單好記。</p>
+        <p class="mut">預設抽成 <b>20%</b>（可談）。結帳機制彈性：<b>日結或週結</b>皆可，對帳透明、簡單好記。</p>
         <ul>
           <li>範例：獲利 <b>$10,000</b> → 抽成 20% = <b>$2,000</b></li>
           <li>若當日無獲利 → <b>不收費</b></li>
         </ul>
-        <div class="btn-row" style="margin-top:10px">
-          <a class="btn gold" href="https://line.me/ti/p/dbATQbyhl2" target="_blank">LINE 立即私訊</a>
-          <a class="btn ghost" href="https://www.instagram.com/laozhe._.0820?igsh=eWh1MW15b3U1eDl5&utm_source=qr" target="_blank">IG 私訊</a>
+        <div class="chips" style="margin-top:8px">
+          <span class="chip">🧾 對帳清楚</span>
+          <span class="chip">🤝 公平雙贏</span>
+          <span class="chip">📅 日/週結自選</span>
         </div>
       </div>
 
-      <div class="col6 card panel">
+      <div id="join" class="col6 card panel slim">
         <h2>📲 私訊加入</h2>
-        <p class="sub">任一方式都能找到我，回覆時段：<b>全天回覆</b>（忙線稍候）。</p>
-        <div class="qr-grid">
-          <div class="qr-card">
-            <div class="img-wrap"><img src="line-qr.jpg" alt="LINE QR" loading="lazy"></div>
-            <p style="margin-top:10px"><a class="btn gold" href="https://line.me/ti/p/dbATQbyhl2" target="_blank">LINE 私訊</a></p>
+        <p class="mut">任一方式都可找到我，回覆時段：<b>全天回覆</b>（忙線稍候）。</p>
+        <div class="qr" style="margin-top:10px">
+          <div class="cell">
+            <img src="line-qr.jpg" alt="LINE QR">
+            <a class="btn gold" href="https://line.me/ti/p/dbATQbyhl2" target="_blank">LINE 立即私訊</a>
           </div>
-          <div class="qr-card">
-            <div class="img-wrap"><img src="ig-qr.jpg" alt="IG QR" loading="lazy"></div>
-            <p style="margin-top:10px"><a class="btn ghost" href="https://www.instagram.com/laozhe._.0820?igsh=eWh1MW15b3U1eDl5&utm_source=qr" target="_blank">IG 私訊</a></p>
+          <div class="cell">
+            <img src="ig-qr.jpg" alt="IG QR">
+            <a class="btn" href="https://www.instagram.com/laozhe._.0820?igsh=eWh1MW15b3U1eDl5&utm_source=qr" target="_blank">IG 私訊</a>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <footer class="footer">
-    <small>© 老哲｜AI 實測程式 × 私訊帶牌 · 本頁僅為工具／活動介紹，非投資建議或保證獲利。請量力而為，嚴守紀律。</small>
-    <div class="btn-row">
-      <a class="btn ghost" href="https://line.me/ti/p/dbATQbyhl2" target="_blank">聯絡老哲</a>
-    </div>
-  </footer>
-</div>
-
-<!-- ====== 行動浮條（手機） ====== -->
-<div class="sticky">
-  <a class="btn gold" href="https://line.me/ti/p/dbATQbyhl2" target="_blank">LINE 私訊加入</a>
-</div>
+    <footer class="footer">
+      <div>© 老哲｜AI 實測程式 × 私訊帶牌 · 本頁僅為工具／活動介紹，非投資建議或保證獲利。請量力而為，嚴格止盈止損。</div>
+      <div class="cta">
+        <a class="btn" href="https://line.me/ti/p/dbATQbyhl2" target="_blank">聯絡老哲</a>
+      </div>
+    </footer>
+  </main>
 </body>
 </html>
