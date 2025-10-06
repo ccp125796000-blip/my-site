@@ -157,7 +157,61 @@
       </div>
 
       <div class="cta-row" style="margin-top:18px">
-        <a class="btn gold" href="#c">立即私訊老哲</a>
+        <!-- C. 私訊加入 / QR -->
+<section id="c" class="block" aria-labelledby="c-title" style="margin-top:22px;">
+  <div class="title" id="c-title">
+    <span class="em">📱</span> 私訊加入
+  </div>
+  <p class="lead">任何方式都能找到我，回覆時段：<b>全天回覆</b>（忙線稍候）。</p>
+
+  <div class="qr-cards" role="list" style="display:flex; justify-content:center; flex-wrap:wrap; gap:40px; margin-top:30px;">
+    
+    <!-- LINE 卡片 -->
+    <div class="qr" role="listitem" style="text-align:center;">
+      <img src="line-qr.jpg" alt="LINE 私訊 QR Code" loading="lazy" 
+           style="width:200px; height:200px; border-radius:20px; box-shadow:0 0 20px rgba(255,215,0,0.3);">
+      <a href="https://line.me/ti/p/dbATQbyhl2" target="_blank" 
+         class="btn gold" 
+         style="display:inline-block; text-decoration:none; background:linear-gradient(90deg,#FFD76A,#FFB800);
+                color:#111; font-weight:bold; padding:12px 28px; border-radius:40px; 
+                margin-top:18px; box-shadow:0 0 20px rgba(255,200,50,0.4); transition:0.3s ease;">
+         LINE 私訊加入
+      </a>
+      <div class="cap" style="margin-top:6px; color:#ffdf88;">LINE 私訊</div>
+    </div>
+
+    <!-- IG 卡片 -->
+    <div class="qr" role="listitem" style="text-align:center;">
+      <img src="ig-qr.jpg" alt="IG 私訊 QR Code" loading="lazy" 
+           style="width:200px; height:200px; border-radius:20px; box-shadow:0 0 20px rgba(255,80,80,0.3);">
+      <a href="https://www.instagram.com/laozhe._.0820?igsh=eWh1MW15b3U1eDl5&utm_source=qr" target="_blank"
+         class="btn" 
+         style="display:inline-block; text-decoration:none; background:linear-gradient(90deg,#FF8C3C,#FF2E63);
+                color:#fff; font-weight:bold; padding:12px 28px; border-radius:40px; 
+                margin-top:18px; box-shadow:0 0 20px rgba(255,80,80,0.4); transition:0.3s ease;">
+         IG 私訊加入
+      </a>
+      <div class="cap" style="margin-top:6px; color:#ffb3a7;">IG 私訊</div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 25px rgba(255,215,100,0.8);
+    opacity: 0.95;
+  }
+
+  @media (max-width:768px) {
+    .qr-cards {
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+    }
+  }
+</style>
       </div>
     </section>
 
