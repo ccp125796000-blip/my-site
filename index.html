@@ -89,9 +89,18 @@
       .grid.g3{grid-template-columns:repeat(2,1fr)}
       .qr-cards{grid-template-columns:repeat(2,1fr)}
     }
-    @media (min-width:1024px){
+     @media (min-width:1024px){
       .grid.g3{grid-template-columns:repeat(3,1fr)}
       .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:22px;align-items:center}
+    }
+
+    /* ✅ 新增：QR卡片置中樣式 */
+    .qr-cards{display:grid;gap:18px;grid-template-columns:1fr}
+    .qr{display:flex;flex-direction:column;align-items:center;text-align:center}
+    .qr .btn{margin-top:12px}
+    .qr .cap{margin-top:6px;font-weight:800;letter-spacing:.08em;color:var(--cyan)}
+    @media (min-width:700px){
+      .qr-cards{grid-template-columns:repeat(2,1fr)}
     }
   </style>
 </head>
@@ -167,18 +176,27 @@
   <p class="lead">任何方式都能找到我，回覆時段：<b>全天回覆</b>（忙線稍候）。</p>
 
   <div class="qr-cards" role="list">
-    <!-- ✅ LINE -->
+    <!-- LINE -->
     <div class="qr" role="listitem">
       <img src="line-qr.jpg" alt="LINE 私訊 QR Code" loading="lazy">
       <a class="btn gold"
          href="https://line.me/ti/p/dbATQbyhl2"
-         target="_blank"
-         rel="noopener noreferrer"
+         target="_blank" rel="noopener noreferrer"
          aria-label="LINE 私訊加入">LINE 私訊加入</a>
-      <div class="cap">
-        <a href="https://line.me/ti/p/dbATQbyhl2" target="_blank" rel="noopener noreferrer">LINE 私訊</a>
-      </div>
+      <div class="cap">LINE 私訊</div>
     </div>
+
+    <!-- IG -->
+    <div class="qr" role="listitem">
+      <img src="ig-qr.jpg" alt="IG 私訊 QR Code" loading="lazy">
+      <a class="btn gold"
+         href="https://www.instagram.com/laozhe._.0820?igsh=eWh1MW15b3U1eDl5&utm_source=qr"
+         target="_blank" rel="noopener noreferrer"
+         aria-label="IG 私訊加入">IG 私訊加入</a>
+      <div class="cap">IG 私訊</div>
+    </div>
+  </div>
+</section>
 
     <!-- ✅ IG -->
     <div class="qr" role="listitem">
